@@ -343,3 +343,9 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(style);
 });
+document.addEventListener("DOMContentLoaded", function () {
+  const buttons = document.querySelectorAll(".buy-btn");
+  buttons.forEach(btn =>
+    btn.addEventListener("click", () => alert("Thanks for your order!"))
+  );
+});

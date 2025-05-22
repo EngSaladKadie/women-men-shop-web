@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Shoes - Sale</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar (same as index.html) -->
+    <nav class="navbar">
+        <!-- Copy navbar from index.html -->
+    </nav>
+
+    <!-- Sale Banner -->
+    <section class="sale-banner">
+        <div class="container">
+            <h1>End of Season Sale</h1>
+            <p>Up to 50% off selected styles</p>
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span id="days">00</span>
+                    <span>Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="hours">00</span>
+                    <span>Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="minutes">00</span>
+                    <span>Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span id="seconds">00</span>
+                    <span>Seconds</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sale Products -->
+    <section class="sale-products">
+        <div class="container">
+            <div class="sale-header">
+                <h2>On Sale Now</h2>
+                <div class="sale-filters">
+                    <select id="categoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="men">Men</option>
+                        <option value="women">Women</option>
+                    </select>
+                    <select id="sortBy">
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="discount">Discount %</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="products-grid" id="saleProducts">
+                <!-- Sale products will be loaded here via JavaScript -->
+            </div>
+            
+            <div class="pagination">
+                <button class="pagination-btn" id="prevPage">Previous</button>
+                <span class="page-numbers" id="pageNumbers"></span>
+                <button class="pagination-btn" id="nextPage">Next</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h3>Get Exclusive Sale Notifications</h3>
+            <p>Subscribe to our newsletter to be the first to know about our special offers</p>
+            <form id="saleNewsletterForm">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit" class="btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer (same as index.html) -->
+    <footer class="footer">
+        <!-- Copy footer from index.html -->
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="sale.js"></script>
+</body>
+</html>
