@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kadiye Shoes - Lookbook</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ===== Global Styles ===== */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #3498db;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --text: #333;
+            --text-light: #6c757d;
+            --white: #fff;
+            --black: #000;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --border: #dee2e6;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        h1, h2, h3, h4 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--secondary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: #1a252f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mt-3 { margin-top: 3rem; }
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        .mb-3 { margin-bottom: 3rem; }
+
+        /* ===== Navigation ===== */
+        .navbar {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .cart-icon, .user-icon {
+            position: relative;
+            font-size: 1.2rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--secondary);
+            color: var(--white);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* ===== Lookbook Hero ===== */
+        .lookbook-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), url('https://images.unsplash.com/photo-1460353581641-37baddab0fa2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80') no-repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lookbook-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(231, 76, 60, 0.3), rgba(52, 152, 219, 0.3));
+            z-index: 1;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        .lookbook-hero-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .lookbook-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInDown 1s ease;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .lookbook-hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            animation: fadeInUp 1s ease;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ===== Lookbook Gallery ===== */
+        .lookbook-gallery {
+            padding: 4rem 0;
+        }
+
+        .lookbook-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .lookbook-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .lookbook-header p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+
+        .lookbook-header::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+            margin: 1rem auto 0;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+        .gallery-item:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-item:nth-child(6) { animation-delay: 0.6s; }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-img {
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .gallery-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-img img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: var(--white);
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .gallery-overlay p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* ===== Lookbook Seasons ===== */
+        .lookbook-seasons {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 4rem 0;
+        }
+
+        .seasons-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .seasons-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .seasons-header p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .season-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .season-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            color: var(--text);
+            transform: scale(0.95);
+            opacity: 0;
+            animation: fadeInScale 0.5s ease forwards;
+        }
+
+        .season-card:nth-child(1) { animation-delay: 0.1s; }
+        .season-card:nth-child(2) { animation-delay: 0.2s; }
+        .season-card:nth-child(3) { animation-delay: 0.3s; }
+        .season-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .season-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .season-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .season-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .season-card:hover .season-img img {
+            transform: scale(1.1);
+        }
+
+        .season-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .season-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .season-content p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding-top: 4rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--white);
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .lookbook-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .gallery-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .lookbook-hero {
+                height: 50vh;
+            }
+            
+            .lookbook-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .season-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="./asset/logo.png" alt="Kadiye Shoes Logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="men.html">Men</a></li>
+                <li><a href="women.html">Women</a></li>
+                <li><a href="lookbook.html">Lookbook</a></li>
+                <li><a href="sale.html">Sale</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" class="user-icon">
+                    <i class="fas fa-user"></i>
+                </a>
+            </div>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Lookbook Hero -->
+    <section class="lookbook-hero">
+        <div class="container lookbook-hero-content">
+            <h1>Kadiye Lookbook</h1>
+            <p>Discover the latest trends and styling inspiration from our collections</p>
+            <a href="#gallery" class="btn btn-primary">View Gallery</a>
+        </div>
+    </section>
+
+    <!-- Lookbook Gallery -->
+    <section class="lookbook-gallery" id="gallery">
+        <div class="container">
+            <div class="lookbook-header">
+                <h2>Seasonal Collections</h2>
+                <p>Explore our curated looks for every occasion and season</p>
+            </div>
+            <div class="gallery-container" id="galleryContainer">
+                <!-- Gallery items will be loaded via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Lookbook Seasons -->
+    <section class="lookbook-seasons">
+        <div class="container">
+            <div class="seasons-header">
+                <h2>Shop By Season</h2>
+                <p>Find the perfect styles for every time of year</p>
+            </div>
+            <div class="season-cards" id="seasonCards">
+                <!-- Season cards will be loaded via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="men.html">Men</a></li>
+                        <li><a href="women.html">Women</a></li>
+                        <li><a href="sale.html">Sale</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Help</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <ul>
+                        <li><a href="about.html">Our Story</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Kadiye Shoes. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== DOM Elements =====
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const cartCount = document.querySelector('.cart-count');
+        const galleryContainer = document.getElementById('galleryContainer');
+        const seasonCards = document.getElementById('seasonCards');
+
+        // ===== Lookbook Data =====
+        const galleryItems = [
+            {
+                id: 1,
+                title: 'Urban Explorer',
+                description: 'Street-ready styles for the modern city dweller',
+                image: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+            },
+            {
+                id: 2,
+                title: 'Weekend Vibes',
+                description: 'Casual comfort for your days off',
+                image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+            },
+            {
+                id: 3,
+                title: 'Evening Elegance',
+                description: 'Sophisticated looks for night out',
+                image: 'https://images.unsplash.com/photo-1463100099107-aa0980c362e6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+            },
+            {
+                id: 4,
+                title: 'Office Ready',
+                description: 'Professional styles for the workplace',
+                image: 'https://images.unsplash.com/photo-1520975916090-3105956dac38?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+            },
+            {
+                id: 5,
+                title: 'Summer Breeze',
+                description: 'Light and airy designs for warm days',
+                image: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+            },
+            {
+                id: 6,
+                title: 'Winter Warmth',
+                description: 'Cozy styles for cold weather',
+                image: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+            }
+        ];
+
+        const seasons = [
+            {
+                id: 1,
+                title: 'Spring Collection',
+                description: 'Fresh styles for the new season',
+                image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                link: 'spring.html'
+            },
+            {
+                id: 2,
+                title: 'Summer Collection',
+                description: 'Lightweight designs for sunny days',
+                image: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                link: 'summer.html'
+            },
+            {
+                id: 3,
+                title: 'Autumn Collection',
+                description: 'Rich tones for the changing leaves',
+                image: 'https://images.unsplash.com/photo-1479064555552-3ef4979f8908?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                link: 'autumn.html'
+            },
+            {
+                id: 4,
+                title: 'Winter Collection',
+                description: 'Warm and cozy for the cold months',
+                image: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                link: 'winter.html'
+            }
+        ];
+
+        // ===== Initialize Page =====
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load cart from localStorage
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            updateCartCount(cart.length);
+            
+            // Mobile menu toggle
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            });
+            
+            // Load gallery items
+            displayGalleryItems();
+            
+            // Load season cards
+            displaySeasonCards();
+            
+            // Intersection Observer for animations
+            setupIntersectionObserver();
+        });
+
+        // ===== Display Gallery Items =====
+        function displayGalleryItems() {
+            galleryContainer.innerHTML = galleryItems.map(item => `
+                <div class="gallery-item">
+                    <div class="gallery-img">
+                        <img src="${item.image}" alt="${item.title}">
+                    </div>
+                    <div class="gallery-overlay">
+                        <h3>${item.title}</h3>
+                        <p>${item.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ===== Display Season Cards =====
+        function displaySeasonCards() {
+            seasonCards.innerHTML = seasons.map(season => `
+                <a href="${season.link}" class="season-card">
+                    <div class="season-img">
+                        <img src="${season.image}" alt="${season.title}">
+                    </div>
+                    <div class="season-content">
+                        <h3>${season.title}</h3>
+                        <p>${season.description}</p>
+                        <button class="btn btn-secondary">View Collection</button>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        // ===== Update Cart Count =====
+        function updateCartCount(count) {
+            if (cartCount) {
+                cartCount.textContent = count;
+            }
+        }
+
+        // ===== Intersection Observer for Animations =====
+        function setupIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.gallery-item, .season-card').forEach(item => {
+                observer.observe(item);
+            });
+        }
+    </script>
+</body>
+</html>
