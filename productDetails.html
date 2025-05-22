@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - Premium Shoes</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar (same as index.html) -->
+    <nav class="navbar">
+        <!-- ... same navbar code ... -->
+    </nav>
+
+    <!-- Product Detail Section -->
+    <section class="product-detail">
+        <div class="container">
+            <div class="product-detail-content">
+                <div class="product-images">
+                    <div class="main-image">
+                        <img src="images/products/shoe1.jpg" alt="Product" id="mainImage">
+                    </div>
+                    <div class="thumbnail-images">
+                        <img src="images/products/shoe1.jpg" alt="Thumbnail" class="thumbnail active">
+                        <img src="images/products/shoe1-alt1.jpg" alt="Thumbnail" class="thumbnail">
+                        <img src="images/products/shoe1-alt2.jpg" alt="Thumbnail" class="thumbnail">
+                        <img src="images/products/shoe1-alt3.jpg" alt="Thumbnail" class="thumbnail">
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h1 id="productName">Premium Runner</h1>
+                    <p class="product-price" id="productPrice">$129.99</p>
+                    <div class="product-description">
+                        <p id="productDescription">Lightweight running shoes with premium cushioning technology for maximum comfort during your runs. Features breathable mesh upper and durable rubber outsole.</p>
+                    </div>
+                    <div class="size-selector">
+                        <h3>Size</h3>
+                        <div class="size-options">
+                            <button class="size-option">7</button>
+                            <button class="size-option">8</button>
+                            <button class="size-option active">9</button>
+                            <button class="size-option">10</button>
+                            <button class="size-option">11</button>
+                            <button class="size-option">12</button>
+                        </div>
+                    </div>
+                    <div class="quantity-selector">
+                        <h3>Quantity</h3>
+                        <div class="quantity-control">
+                            <button class="quantity-btn minus">-</button>
+                            <input type="number" value="1" min="1" class="quantity-input">
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                    </div>
+                    <button class="btn add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Product Details Tabs -->
+            <div class="product-tabs">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="description">Description</button>
+                    <button class="tab-btn" data-tab="details">Details</button>
+                    <button class="tab-btn" data-tab="reviews">Reviews</button>
+                </div>
+                <div class="tabs-content">
+                    <div class="tab-pane active" id="description">
+                        <p>Our Premium Runner shoes are designed for athletes who demand both performance and style. The advanced cushioning system absorbs impact and returns energy with each step, while the breathable upper keeps your feet cool and comfortable.</p>
+                        <ul>
+                            <li>Lightweight, responsive cushioning</li>
+                            <li>Breathable mesh upper</li>
+                            <li>Durable rubber outsole with traction pattern</li>
+                            <li>Reinforced heel counter for stability</li>
+                            <li>Removable insole for orthotic compatibility</li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" id="details">
+                        <table>
+                            <tr>
+                                <th>Material</th>
+                                <td>Mesh upper, synthetic overlays, rubber outsole</td>
+                            </tr>
+                            <tr>
+                                <th>Weight</th>
+                                <td>280g (per shoe in size 9)</td>
+                            </tr>
+                            <tr>
+                                <th>Closure</th>
+                                <td>Lace-up</td>
+                            </tr>
+                            <tr>
+                                <th>Color</th>
+                                <td>Black/White/Red</td>
+                            </tr>
+                            <tr>
+                                <th>Origin</th>
+                                <td>Designed in USA, Made in Vietnam</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="reviews">
+                        <div class="review">
+                            <div class="review-header">
+                                <h4>John D.</h4>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="review-text">These are the most comfortable running shoes I've ever worn. The cushioning is amazing and they're so lightweight!</p>
+                        </div>
+                        <div class="review">
+                            <div class="review-header">
+                                <h4>Sarah M.</h4>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="review-text">Great shoes overall, but they run a bit small. I recommend ordering half a size up.</p>
+                        </div>
+                        <form class="review-form">
+                            <h3>Write a Review</h3>
+                            <div class="form-group">
+                                <label for="review-name">Name</label>
+                                <input type="text" id="review-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="review-rating">Rating</label>
+                                <select id="review-rating" required>
+                                    <option value="">Select rating</option>
+                                    <option value="5">5 Stars</option>
+                                    <option value="4">4 Stars</option>
+                                    <option value="3">3 Stars</option>
+                                    <option value="2">2 Stars</option>
+                                    <option value="1">1 Star</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="review-text">Review</label>
+                                <textarea id="review-text" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn">Submit Review</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Related Products -->
+            <div class="related-products">
+                <h2>You May Also Like</h2>
+                <div class="products-grid">
+                    <!-- Related products will be loaded via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (same as index.html) -->
+    <footer class="footer">
+        <!-- ... same footer code ... -->
+    </footer>
+
+    <script src="js/product-detail.js"></script>
+</body>
+</html>
