@@ -3,40 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Men's Shoes - Sole Store</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Men's Shoes - Premium Shoes</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>Sole Store</h1>
-        <p>Step into style and comfort</p>
-    </header>
-    
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="women.html">Women</a></li>
-            <li><a href="men.html">Men</a></li>
-        </ul>
-    </nav>
-    
-    <div class="cart-icon" onclick="viewCart()">
-        🛒
-        <span class="cart-count" id="cart-count">0</span>
-    </div>
-    
-    <main>
-        <h2>Men's Shoes</h2>
-        
-        <div class="products-grid" id="products-grid">
-            <!-- Products will be loaded here by JavaScript -->
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Premium Shoes Logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="men.html" class="active">Men</a></li>
+                <li><a href="women.html">Women</a></li>
+                <li><a href="lookbook.html">Lookbook</a></li>
+                <li><a href="sale.html">Sale</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" class="user-icon">
+                    <i class="fas fa-user"></i>
+                </a>
+            </div>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
-    </main>
-    
-    <footer>
-        <p>&copy; 2023 Sole Store. All rights reserved.</p>
+    </nav>
+
+    <!-- Men's Products Section -->
+    <section class="container">
+        <h1 class="section-title">Men's Collection</h1>
+        
+        <div class="filter-section">
+            <h3 class="filter-title">Filter By</h3>
+            <div class="filter-group">
+                <h4>Category</h4>
+                <div class="filter-options">
+                    <div class="filter-option active">All</div>
+                    <div class="filter-option">Sneakers</div>
+                    <div class="filter-option">Boots</div>
+                    <div class="filter-option">Dress Shoes</div>
+                    <div class="filter-option">Sandals</div>
+                </div>
+            </div>
+            <div class="filter-group">
+                <h4>Size</h4>
+                <div class="filter-options">
+                    <div class="filter-option">8</div>
+                    <div class="filter-option">9</div>
+                    <div class="filter-option">10</div>
+                    <div class="filter-option">11</div>
+                    <div class="filter-option">12</div>
+                </div>
+            </div>
+            <div class="filter-group">
+                <h4>Color</h4>
+                <div class="filter-options">
+                    <div class="filter-option">Black</div>
+                    <div class="filter-option">White</div>
+                    <div class="filter-option">Brown</div>
+                    <div class="filter-option">Blue</div>
+                    <div class="filter-option">Gray</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="products-grid" id="menProducts">
+            <!-- Products will be loaded via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="men.html">Men</a></li>
+                    <li><a href="women.html">Women</a></li>
+                    <li><a href="sale.html">Sale</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help</h3>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="about.html">Our Story</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <form id="newsletterForm">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Premium Shoes. All rights reserved.</p>
+        </div>
     </footer>
-    
+
     <script src="men.js"></script>
 </body>
 </html>
