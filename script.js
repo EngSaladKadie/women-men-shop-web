@@ -199,7 +199,7 @@ const products = [
         title: 'Premium Runner',
         price: 129.99,
         originalPrice: 159.99,
-        image: 'images/products/shoe1.jpg',
+        image: './asset/m10.avif',
         rating: 4,
         category: 'men'
     },
@@ -208,7 +208,7 @@ const products = [
         title: 'Elegance Walk',
         price: 99.99,
         originalPrice: 119.99,
-        image: 'images/products/shoe2.jpg',
+        image: './asset/m1.avif',
         rating: 5,
         category: 'women'
     },
@@ -216,16 +216,48 @@ const products = [
         id: 3,
         title: 'Urban Hiker',
         price: 149.99,
-        image: 'images/products/shoe3.jpg',
+        image: './asset/m3.avif',
         rating: 4,
         category: 'men'
+    },
+    {
+        id: 3,
+        title: 'Urban Hiker',
+        price: 149.99,
+        image: './asset/w11.avif',
+        rating: 4,
+        category: 'women'
+    },
+    {
+        id: 3,
+        title: 'Urban Hiker',
+        price: 149.99,
+        image: './asset/m6.avif',
+        rating: 4,
+        category: 'men'
+    },
+    {
+        id: 3,
+        title: 'Urban Hiker',
+        price: 149.99,
+        image: './asset/w2.avif',
+        rating: 4,
+        category: 'women'
+    },
+    {
+        id: 3,
+        title: 'Urban Hiker',
+        price: 149.99,
+        image: './asset/w1.avif',
+        rating: 4,
+        category: 'women'
     },
     {
         id: 4,
         title: 'Classic Loafers',
         price: 89.99,
         originalPrice: 109.99,
-        image: 'images/products/shoe4.jpg',
+        image: './asset/w10.webp',
         rating: 3,
         category: 'women'
     }

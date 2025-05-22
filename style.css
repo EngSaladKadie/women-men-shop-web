@@ -28,6 +28,7 @@ a {
     text-decoration: none;
     color: var(--text-color);
     transition: var(--transition);
+    margin-left: 20px;
 }
 
 a:hover {
@@ -37,6 +38,7 @@ a:hover {
 img {
     max-width: 100%;
     height: auto;
+  
 }
 
 .container {

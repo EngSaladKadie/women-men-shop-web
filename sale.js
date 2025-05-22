@@ -3,11 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const saleProducts = [
         {
             id: 101,
-            title: 'Summer Sneakers',
+            title: 'shoes suit',
             price: 59.99,
             originalPrice: 99.99,
             discount: 40,
-            image: 'images/sale/shoe-sale1.jpg',
+            image: './asset/m1.avif',
             rating: 4,
             category: 'men',
             featured: true
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
             price: 49.99,
             originalPrice: 79.99,
             discount: 38,
-            image: 'images/sale/shoe-sale2.jpg',
+            image: './asset/m2.avif',
             rating: 3,
             category: 'men',
             featured: false
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             price: 69.99,
             originalPrice: 129.99,
             discount: 46,
-            image: 'images/sale/shoe-sale3.jpg',
+            image: './asset/w10.webp',
             rating: 5,
             category: 'women',
             featured: true
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
             price: 39.99,
             originalPrice: 59.99,
             discount: 33,
-            image: 'images/sale/shoe-sale4.jpg',
+            image: './asset/w11.avif',
             rating: 4,
             category: 'women',
             featured: false
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
             price: 79.99,
             originalPrice: 149.99,
             discount: 47,
-            image: 'images/sale/shoe-sale5.jpg',
+            image: './asset/m9.avif',
             rating: 4,
             category: 'men',
             featured: true
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
             price: 89.99,
             originalPrice: 159.99,
             discount: 44,
-            image: 'images/sale/shoe-sale6.jpg',
+            image: './asset/w2.avif',
             rating: 5,
             category: 'women',
             featured: true
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             price: 64.99,
             originalPrice: 89.99,
             discount: 28,
-            image: 'images/sale/shoe-sale7.jpg',
+            image: './asset/m2.avif',
             rating: 4,
             category: 'men',
             featured: false
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
             price: 44.99,
             originalPrice: 69.99,
             discount: 36,
-            image: 'images/sale/shoe-sale8.jpg',
+            image: './asset/w3.avif',
             rating: 3,
             category: 'women',
             featured: false
