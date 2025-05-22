@@ -4,7 +4,7 @@ const menProducts = [
         id: 'm1',
         name: 'Classic Leather Oxfords',
         price: 149.99,
-        image: 'images/men/men1.jpg',
+        image: './asset/m1.avif', // Changed from './asset' to './assets'
         category: 'Dress Shoes',
         colors: ['Black', 'Brown'],
         sizes: [8, 9, 10, 11],
@@ -14,7 +14,7 @@ const menProducts = [
         id: 'm2',
         name: 'Running Shoes',
         price: 99.99,
-        image: 'images/men/men2.jpg',
+        image: './asset/m2.avif',
         category: 'Sneakers',
         colors: ['Black', 'White', 'Blue'],
         sizes: [8, 9, 10, 11, 12],
@@ -24,7 +24,7 @@ const menProducts = [
         id: 'm3',
         name: 'Casual Sneakers',
         price: 79.99,
-        image: 'images/men/men3.jpg',
+        image: './asset/m3.avif',
         category: 'Sneakers',
         colors: ['White', 'Gray'],
         sizes: [8, 9, 10, 11],
@@ -34,7 +34,7 @@ const menProducts = [
         id: 'm4',
         name: 'Leather Loafers',
         price: 119.99,
-        image: 'images/men/men4.jpg',
+        image: './asset/m4',
         category: 'Dress Shoes',
         colors: ['Brown', 'Black'],
         sizes: [9, 10, 11],
@@ -44,7 +44,7 @@ const menProducts = [
         id: 'm5',
         name: 'Hiking Boots',
         price: 159.99,
-        image: 'images/men/men5.jpg',
+        image: './asset/m5.avif',
         category: 'Boots',
         colors: ['Brown', 'Black'],
         sizes: [8, 9, 10, 11, 12],
@@ -54,7 +54,7 @@ const menProducts = [
         id: 'm6',
         name: 'Canvas Slip-ons',
         price: 59.99,
-        image: 'images/men/men6.jpg',
+        image: './asset/m6.avif',
         category: 'Sneakers',
         colors: ['Black', 'Blue', 'Gray'],
         sizes: [8, 9, 10],
@@ -64,7 +64,7 @@ const menProducts = [
         id: 'm7',
         name: 'Chelsea Boots',
         price: 129.99,
-        image: 'images/men/men7.jpg',
+        image: './asset/m7.avif',
         category: 'Boots',
         colors: ['Black', 'Brown'],
         sizes: [8, 9, 10, 11],
@@ -74,7 +74,7 @@ const menProducts = [
         id: 'm8',
         name: 'Athletic Sandals',
         price: 69.99,
-        image: 'images/men/men8.jpg',
+        image: './asset/m8.avif',
         category: 'Sandals',
         colors: ['Black', 'Brown', 'Blue'],
         sizes: [8, 9, 10, 11],
@@ -88,20 +88,30 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 // Display products
 function displayProducts(products = menProducts) {
     const productsGrid = document.getElementById('menProducts');
+    if (!productsGrid) {
+        console.error('Products grid element not found');
+        return;
+    }
+    
     productsGrid.innerHTML = '';
+    
+    if (products.length === 0) {
+        productsGrid.innerHTML = '<p class="no-products">No products found matching your criteria.</p>';
+        return;
+    }
     
     products.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
         
         productCard.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="product-image">
+            <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
             <div class="product-info">
                 <h3 class="product-title">${product.name}</h3>
                 <p class="product-price">$${product.price.toFixed(2)}</p>
-                <p>${product.description}</p>
+                <p class="product-description">${product.description}</p>
                 <div class="product-actions">
-                    <button class="add-to-cart" onclick="addToCart('${product.id}', '${product.name}', ${product.price}, '${product.image}')">Add to Cart</button>
+                    <button class="add-to-cart" onclick="addToCart('${product.id}', '${product.name.replace(/'/g, "\\'")}', ${product.price}, '${product.image.replace(/'/g, "\\'")}')">Add to Cart</button>
                     <button class="wishlist-btn"><i class="far fa-heart"></i></button>
                 </div>
             </div>
@@ -180,8 +190,8 @@ function setupFilters() {
             document.querySelectorAll('.filter-group').forEach(group => {
                 const activeOption = group.querySelector('.filter-option.active');
                 if (activeOption) {
-                    const filterName = group.querySelector('h4').textContent;
-                    activeFilters[filterName] = activeOption.textContent;
+                    const filterName = group.getAttribute('data-filter-name') || group.querySelector('h4').textContent;
+                    activeFilters[filterName] = activeOption.textContent.trim();
                 }
             });
             
@@ -192,4 +202,31 @@ function setupFilters() {
 }
 
 // Apply filters to products
-function applyFilters(f
+function applyFilters(filters) {
+    let filteredProducts = [...menProducts];
+    
+    for (const [filterName, filterValue] of Object.entries(filters)) {
+        if (filterValue === 'All') continue;
+        
+        filteredProducts = filteredProducts.filter(product => {
+            if (filterName === 'Category') {
+                return product.category === filterValue;
+            } else if (filterName === 'Price') {
+                if (filterValue === 'Under $100') return product.price < 100;
+                if (filterValue === '$100 - $150') return product.price >= 100 && product.price <= 150;
+                if (filterValue === 'Over $150') return product.price > 150;
+            } else if (filterName === 'Color') {
+                return product.colors.includes(filterValue);
+            }
+            return true;
+        });
+    }
+    
+    displayProducts(filteredProducts);
+}
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', function() {
+    displayProducts();
+    setupFilters();
+});
