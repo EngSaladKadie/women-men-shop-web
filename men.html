@@ -1,28 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Men's Shoes</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Men's Shoes - Sole Store</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>Men's Shoes</h1>
-  </header>
-  <div class="container">
-    <div class="card">
-      <img src="https://via.placeholder.com/250x200?text=Boots+1" alt="Boots">
-      <h2>Leather Boots</h2>
-      <p class="price">$89.99</p>
-      <button class="buy-btn">Buy Now</button>
+    <header>
+        <h1>Sole Store</h1>
+        <p>Step into style and comfort</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="women.html">Women</a></li>
+            <li><a href="men.html">Men</a></li>
+        </ul>
+    </nav>
+    
+    <div class="cart-icon" onclick="viewCart()">
+        🛒
+        <span class="cart-count" id="cart-count">0</span>
     </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/250x200?text=Loafers+2" alt="Loafers">
-      <h2>Casual Loafers</h2>
-      <p class="price">$69.99</p>
-      <button class="buy-btn">Buy Now</button>
-    </div>
-  </div>
-  <script src="script.js"></script>
+    
+    <main>
+        <h2>Men's Shoes</h2>
+        
+        <div class="products-grid" id="products-grid">
+            <!-- Products will be loaded here by JavaScript -->
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 Sole Store. All rights reserved.</p>
+    </footer>
+    
+    <script src="men.js"></script>
 </body>
 </html>
