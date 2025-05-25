@@ -1,565 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Kadiye Shoe Store Management - Products</title>
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
-<style>
-  /* Reset & basics */
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    background: #f9f9f9;
-    color: #333;
-  }
-  h1,h2,h3,h4 {
-    margin: 0 0 10px 0;
-  }
-  a {
-    color: #3498db;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-  button {
-    cursor: pointer;
-  }
-
-  /* Layout */
-  .dashboard-container {
-    display: flex;
-    min-height: 100vh;
-  }
-  /* Sidebar */
-  .sidebar {
-    width: 220px;
-    background: #222;
-    color: #eee;
-    display: flex;
-    flex-direction: column;
-  }
-  .sidebar-header {
-    padding: 20px;
-    background: #111;
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: 700;
-  }
-  .sidebar-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .sidebar-nav li {
-    border-bottom: 1px solid #333;
-  }
-  .sidebar-nav li a {
-    display: flex;
-    align-items: center;
-    padding: 14px 20px;
-    color: #ccc;
-    font-weight: 600;
-    gap: 10px;
-  }
-  .sidebar-nav li.active a,
-  .sidebar-nav li a:hover {
-    background: #3498db;
-    color: white;
-  }
-  /* Main */
-  .main-content {
-    flex: 1;
-    padding: 20px 30px;
-    overflow-y: auto;
-  }
-  .top-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-  }
-  .top-header h1 {
-    font-weight: 700;
-    font-size: 1.8rem;
-  }
-
-  /* Buttons */
-  .btn {
-    padding: 8px 14px;
-    border: none;
-    border-radius: 5px;
-    font-weight: 600;
-    background: #3498db;
-    color: white;
-    transition: background 0.3s ease;
-  }
-  .btn:hover {
-    background: #2980b9;
-  }
-  .btn.small {
-    font-size: 0.85rem;
-    padding: 6px 12px;
-  }
-  .btn.cancel {
-    background: #aaa;
-  }
-  .btn.cancel:hover {
-    background: #888;
-  }
-  .btn.primary {
-    background: #27ae60;
-  }
-  .btn.primary:hover {
-    background: #1e8449;
-  }
-
-  /* Search & Filters */
-  .product-filters {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Kadiye Shoe Store Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="user.css">
+    <link rel="stylesheet" href="products.css">
+    <style>
+      /* Product Management Specific Styles */
+.product-filters {
     display: flex;
     gap: 15px;
     margin-bottom: 20px;
     flex-wrap: wrap;
-  }
-  .product-filters select,
-  .product-filters input[type="text"] {
-    padding: 6px 10px;
-    font-size: 1rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    flex: 1 1 150px;
-  }
+}
 
-  /* Grid products */
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-    gap: 20px;
-  }
-  .product-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 8px rgb(0 0 0 / 0.1);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-  .product-card img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-  }
-  .product-card-content {
-    padding: 15px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .product-name {
-    font-weight: 700;
-    margin-bottom: 8px;
-    font-size: 1.1rem;
-  }
-  .product-price {
-    color: #27ae60;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-  .product-category,
-  .product-sizes {
-    font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 8px;
-  }
-  .product-description {
-    font-size: 0.9rem;
-    flex-grow: 1;
-    margin-bottom: 12px;
-    color: #666;
-  }
-  .product-actions {
-    margin-top: auto;
-  }
-  .product-actions button {
-    width: 100%;
-  }
-
-  /* Transactions table */
-  .card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
-    margin-bottom: 30px;
-    padding: 20px;
-  }
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  table.data-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  table.data-table th,
-  table.data-table td {
-    border: 1px solid #ddd;
+.product-filters select,
+.product-filters input {
     padding: 8px 12px;
-    text-align: left;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     font-size: 0.9rem;
-  }
-  table.data-table th {
-    background: #3498db;
-    color: white;
-  }
-  table.data-table tbody tr:nth-child(even) {
-    background: #f3f6fa;
-  }
+}
 
-  /* Modal */
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right:0;
-    bottom: 0;
-    background: rgba(0,0,0,0.5);
-    display: none;
+.product-filters input {
+    flex: 1;
+    min-width: 200px;
+}
+
+.data-table th, .data-table td {
+    vertical-align: middle;
+}
+
+.product-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.stock-status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.stock-status.in-stock {
+    background-color: #d5f5e3;
+    color: #27ae60;
+}
+
+.stock-status.low-stock {
+    background-color: #fef9e7;
+    color: #f39c12;
+}
+
+.stock-status.out-of-stock {
+    background-color: #fadbd8;
+    color: #e74c3c;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.action-buttons .btn {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+}
+
+.btn.edit {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn.delete {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.pagination {
+    display: flex;
     justify-content: center;
     align-items: center;
-    padding: 15px;
-    z-index: 9999;
-  }
-  .modal-content {
-    background: white;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 600px;
-    padding: 25px;
-    position: relative;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-  .close-modal {
-    position: absolute;
-    top: 14px;
-    right: 18px;
-    font-size: 24px;
-    cursor: pointer;
-    color: #999;
-  }
-  .close-modal:hover {
-    color: #333;
-  }
-  .form-row {
-    display: flex;
     gap: 15px;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-  }
-  .form-group {
-    flex: 1 1 100%;
-  }
-  .form-group label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 600;
-  }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    width: 100%;
-    padding: 8px 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-  }
-  .form-group textarea {
-    resize: vertical;
-  }
-  .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 10px;
-  }
+    margin-top: 20px;
+}
 
-  /* Responsive */
-  @media (max-width: 700px) {
-    .form-row {
-      flex-direction: column;
-    }
-    .sidebar {
-      display: none;
-    }
-  }
-</style>
+#page-info {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+    </style>
 </head>
 <body>
-<div class="dashboard-container">
-  <!-- Sidebar Navigation -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <h2>Kadiye shoes store</h2>
-    </div>
-    <nav class="sidebar-nav">
-      <ul>
-        <li class="active"><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-        <li><a href="product.html"><i class="fas fa-shoe-prints"></i> Products</a></li>
-        <li><a href="#inventory"><i class="fas fa-boxes"></i> Inventory</a></li>
-        <li><a href="#transactions"><i class="fas fa-receipt"></i> Transactions</a></li>
-        <li><a href="#analytics"><i class="fas fa-chart-line"></i> Analytics</a></li>
-        <li><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
-      </ul>
-    </nav>
-  </aside>
-
-  <!-- Main Content Area -->
-  <main class="main-content">
-    <header class="top-header">
-      <h1>Product Management</h1>
-    </header>
-
-    <!-- Filters & Search -->
-    <div class="product-filters">
-      <select id="category-filter">
-        <option value="all">All Categories</option>
-        <option value="running">Running</option>
-        <option value="casual">Casual</option>
-        <option value="basketball">Basketball</option>
-        <option value="soccer">Soccer</option>
-      </select>
-      <select id="size-filter">
-        <option value="all">All Sizes</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-      </select>
-      <input
-        type="text"
-        id="search-products"
-        placeholder="Search products..."
-        autocomplete="off"
-      />
-      <button class="btn" id="add-product-btn">
-        <i class="fas fa-plus"></i> Add Product
-      </button>
-    </div>
-
-    <!-- Products Grid -->
-    <div id="products-list" class="products-grid"></div>
-
-    <!-- Transactions -->
-    <section class="card" style="margin-top:40px;">
-      <div class="card-header">
-        <h3>Recent Transactions</h3>
-      </div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Product</th>
-            <th>Date</th>
-            <th>Amount ($)</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="transactions-list">
-          <!-- Transactions go here -->
-        </tbody>
-      </table>
-    </section>
-  </main>
-</div>
-
-<!-- Add/Edit Product Modal -->
-<div id="product-modal" class="modal">
-  <div class="modal-content">
-    <span class="close-modal" id="close-modal">&times;</span>
-    <h2 id="modal-title">Add New Product</h2>
-    <form id="product-form">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="product-name">Product Name *</label>
-          <input type="text" id="product-name" required />
-        </div>
-        <div class="form-group">
-          <label for="product-category">Category *</label>
-          <select id="product-category" required>
-            <option value="running">Running</option>
-            <option value="casual">Casual</option>
-            <option value="basketball">Basketball</option>
-            <option value="soccer">Soccer</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label for="product-price">Price ($) *</label>
-          <input type="number" id="product-price" step="0.01" min="0" required />
-        </div>
-        <div class="form-group">
-          <label for="product-sizes">Sizes (comma separated) *</label>
-          <input
-            type="text"
-            id="product-sizes"
-            placeholder="6,7,8,9,10"
-            required
-          />
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="product-description">Description</label>
-        <textarea id="product-description" rows="3"></textarea>
-      </div>
-
-      <div class="form-actions">
-        <button type="button" class="btn cancel" id="cancel-btn">Cancel</button>
-        <button type="submit" class="btn primary">Save Product</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<script>
-  
-    // In-memory product and transaction storage
-    let products = [];
-    let transactions = [];
-
-    // DOM elements
-    const productsList = document.getElementById('products-list');
-    const transactionsList = document.getElementById('transactions-list');
-    const categoryFilter = document.getElementById('category-filter');
-    const sizeFilter = document.getElementById('size-filter');
-    const searchInput = document.getElementById('search-products');
-    const addProductBtn = document.getElementById('add-product-btn');
-
-    const productModal = document.getElementById('product-modal');
-    const closeModalBtn = document.getElementById('close-modal');
-    const productForm = document.getElementById('product-form');
-    const cancelBtn = document.getElementById('cancel-btn');
-    const modalTitle = document.getElementById('modal-title');
-
-    // Utility: Generate unique ID
-    function generateId() {
-      return '_' + Math.random().toString(36).substr(2, 9);
-    }
-
-    // Render products grid
-    function renderProducts() {
-      const category = categoryFilter.value;
-      const size = sizeFilter.value;
-      const searchTerm = searchInput.value.toLowerCase().trim();
-
-      productsList.innerHTML = '';
-
-      const filtered = products.filter(p => {
-        const matchesCategory = category === 'all' || p.category === category;
-        const matchesSize =
-          size === 'all' || p.sizes.some(s => s === size);
-        const matchesSearch =
-          p.name.toLowerCase().includes(searchTerm) ||
-          p.description.toLowerCase().includes(searchTerm);
-        return matchesCategory && matchesSize && matchesSearch;
-      });
-
-      if (filtered.length === 0) {
-        productsList.innerHTML = '<p>No products found.</p>';
-        return;
-      }
-
-      filtered.forEach(product => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-
-        card.innerHTML = `
-          <img src="https://via.placeholder.com/220x140.png?text=${encodeURIComponent(
-            product.name
-          )}" alt="${product.name}" />
-          <div class="product-card-content">
-            <div class="product-name">${product.name}</div>
-            <div class="product-price">$${product.price.toFixed(2)}</div>
-            <div class="product-category">Category: ${product.category}</div>
-            <div class="product-sizes">Sizes: ${product.sizes.join(', ')}</div>
-            <div class="product-description">${product.description || ''}</div>
-            <div class="product-actions">
-              <button class="btn primary pay-btn" data-id="${product.id}">
-                <i class="fas fa-credit-card"></i> Pay
-              </button>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Kadiye shoes store</h2>
             </div>
-          </div>
-        `;
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li class="active"><a href="product.html"><i class="fas fa-shoe-prints"></i> Products</a></li>
+                    <li><a href="inventory.html"><i class="fas fa-boxes"></i> Inventory</a></li>
+                    <li><a href="transactions.html"><i class="fas fa-receipt"></i> Transactions</a></li>
+                    <li><a href="analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-        productsList.appendChild(card);
-      });
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header Bar -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h1>Product Management</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search products...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="user-profile">
+                        <img src="../../Pictures/two.jpg" alt="Admin">
+                        <span>Eng kadie</span>
+                        <button id="admin-logout" class="btn logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
+                </div>
+            </header>
 
-      // Add event listeners for pay buttons
-      document.querySelectorAll('.pay-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.dataset.id;
-          openPaymentProcess(id);
-        });
-      });
-    }
+            <!-- Product Management Section -->
+            <section class="content-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>All Products</h3>
+                        <button id="add-product-btn" class="btn primary"><i class="fas fa-plus"></i> Add Product</button>
+                    </div>
+                    <div class="card-content">
+                        <div class="product-filters">
+                            <select id="category-filter">
+                                <option value="all">All Categories</option>
+                                <option value="running">Running</option>
+                                <option value="casual">Casual</option>
+                                <option value="basketball">Basketball</option>
+                                <option value="soccer">Soccer</option>
+                            </select>
+                            <select id="size-filter">
+                                <option value="all">All Sizes</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                            <select id="status-filter">
+                                <option value="all">All Status</option>
+                                <option value="in-stock">In Stock</option>
+                                <option value="low-stock">Low Stock</option>
+                                <option value="out-of-stock">Out of Stock</option>
+                            </select>
+                            <input type="text" id="search-products" placeholder="Search products...">
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>SKU</th>
+                                    <th>Category</th>
+                                    <th>Size</th>
+                                    <th>Price</th>
+                                    <th>Cost</th>
+                                    <th>Profit</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table-body">
+                                <!-- Products will be loaded here -->
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            <button id="prev-page" class="btn"><i class="fas fa-chevron-left"></i> Previous</button>
+                            <span id="page-info">Page 1 of 5</span>
+                            <button id="next-page" class="btn">Next <i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
 
-    // Render transactions table
-    function renderTransactions() {
-      transactionsList.innerHTML = '';
-      if (transactions.length === 0) {
-        transactionsList.innerHTML = `<tr><td colspan="5" style="text-align:center;">No transactions yet.</td></tr>`;
-        return;
-      }
-      transactions.forEach(t => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${t.orderId}</td>
-          <td>${t.productName}</td>
-          <td>${new Date(t.date).toLocaleString()}</td>
-          <td>$${t.amount.toFixed(2)}</td>
-          <td>${t.status}</td>
-        `;
-        transactionsList.appendChild(tr);
-      });
-    }
+        <!-- Product Modal -->
+        <div id="product-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="modal-title">Add New Product</h2>
+                <form id="product-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-name">Product Name</label>
+                            <input type="text" id="product-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-sku">SKU</label>
+                            <input type="text" id="product-sku" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-price">Price ($)</label>
+                            <input type="number" id="product-price" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-cost">Cost ($)</label>
+                            <input type="number" id="product-cost" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-profit">Profit ($)</label>
+                            <input type="number" id="product-profit" step="0.01" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-category">Category</label>
+                            <select id="product-category" required>
+                                <option value="running">Running</option>
+                                <option value="casual">Casual</option>
+                                <option value="basketball">Basketball</option>
+                                <option value="soccer">Soccer</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-brand">Brand</label>
+                            <input type="text" id="product-brand" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-colors">Colors (comma separated)</label>
+                            <input type="text" id="product-colors" placeholder="Red, Blue, Black" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-sizes">Sizes (comma separated)</label>
+                            <input type="text" id="product-sizes" placeholder="6, 7, 8, 9, 10" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-stock">Initial Stock</label>
+                        <input type="number" id="product-stock" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-description">Description</label>
+                        <textarea id="product-description" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-images">Product Images</label>
+                        <input type="file" id="product-images" multiple accept="image/*">
+                        <div id="image-preview" class="image-preview"></div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn cancel">Cancel</button>
+                        <button type="submit" class="btn primary">Save Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-    // Open product modal to add a new product
-    addProductBtn.addEventListener('click', () => {
-      modalTitle.textContent = 'Add New Product';
-      productForm.reset();
-      productModal.style.display = 'flex';
-    });
-
-    // Close modal
-    function closeModal() {
-      productModal.style.display = 'none';
-    }
-    closeModalBtn.addEventListener('click', closeModal);
-    cancelBtn.addEventListener('click', closeModal);
-
-    // Handle add product form submission
-    productForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const name = document.getElementById('product-name').value.trim();
-      const category = document.getElementById('product-category').value;
-      const price = parseFloat(document.getElementById('product-price').value);
-      const sizesRaw = document.getElementById('product-sizes').value.trim();
-      const description = document.getElementById('product-description').value.trim();
-
-      
-    });
+    <script src="user.js"></script>
+    <script src="products.js"></script>
+    
+</body>
+</html>
