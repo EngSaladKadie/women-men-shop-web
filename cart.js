@@ -1,359 +1,356 @@
-// DOM Elements
-const cartItemsContainer = document.querySelector('.cart-items');
-const emptyCartDiv = document.querySelector('.empty-cart');
-const subtotalElement = document.querySelector('.subtotal');
-const shippingElement = document.querySelector('.shipping');
-const taxElement = document.querySelector('.tax');
-const totalElement = document.querySelector('.total-amount');
-const checkoutBtn = document.querySelector('.checkout-btn');
+// ===== DOM Elements =====
+const hamburger = document.querySelector(".hamburger");
+const navLinks = document.querySelector(".nav-links");
+const cartCount = document.querySelector(".cart-count");
+const cartView = document.getElementById("cartView");
+const paymentView = document.getElementById("paymentView");
+const orderConfirmation = document.getElementById("orderConfirmation");
+const checkoutBtn = document.getElementById("checkoutBtn");
+const backToCart = document.getElementById("backToCart");
+const placeOrderBtn = document.getElementById("placeOrderBtn");
+const cartItemsContainer = document.getElementById("cartItems");
+const paymentMethods = document.querySelectorAll(".payment-method-radio");
+const paymentForms = document.querySelectorAll(".payment-form");
 
-// Initialize cart page
-function initCartPage() {
-    displayCartItems();
-    updateCartSummary();
-    updateCartCount();
-}
+// ===== Cart Data =====
+let cart = [
+  {
+    id: 1,
+    title: "Premium Runner",
+    price: 129.99,
+    image:
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+    quantity: 1,
+    size: "M",
+  },
+  {
+    id: 2,
+    title: "Classic Leather",
+    price: 159.99,
+    image:
+      "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+    quantity: 2,
+    size: "L",
+  },
+];
 
-// Display cart items
-function displayCartItems() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
+// ===== Initialize Page =====
+document.addEventListener("DOMContentLoaded", () => {
+  // Load cart from localStorage if available
+  const savedCart = localStorage.getItem("cart");
+  if (savedCart) {
+    cart = JSON.parse(savedCart);
+  }
+
+  updateCart();
+
+  // Mobile menu toggle
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+    hamburger.classList.toggle("active");
+  });
+
+  // Checkout button
+  checkoutBtn.addEventListener("click", () => {
     if (cart.length === 0) {
-        emptyCartDiv.style.display = 'block';
-        checkoutBtn.disabled = true;
-        return;
+      alert("Your cart is empty!");
+      return;
     }
-    
-    emptyCartDiv.style.display = 'none';
-    checkoutBtn.disabled = false;
-    
-    cartItemsContainer.innerHTML = '';
-    
-    cart.forEach((item, index) => {
-        const cartItem = document.createElement('div');
-        cartItem.className = 'cart-item';
-        cartItem.innerHTML = `
-            <div class="cart-item-image">
-                <img src="${item.image}" alt="${item.name}">
-            </div>
-            <div class="cart-item-details">
-                <h3>${item.name}</h3>
-                <p>Size: ${item.size || 'N/A'}</p>
-                <p class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</p>
-            </div>
-            <div class="cart-item-quantity">
-                <button class="quantity-btn minus" data-index="${index}">-</button>
-                <span class="quantity">${item.quantity}</span>
-                <button class="quantity-btn plus" data-index="${index}">+</button>
-            </div>
-            <button class="remove-item" data-index="${index}">
-                <i class="fas fa-times"></i>
-            </button>
-        `;
-        cartItemsContainer.appendChild(cartItem);
+    cartView.style.display = "none";
+    paymentView.style.display = "block";
+    updatePaymentSummary();
+  });
+
+  // Back to cart button
+  backToCart.addEventListener("click", () => {
+    paymentView.style.display = "none";
+    cartView.style.display = "block";
+  });
+
+  // Place order button
+  placeOrderBtn.addEventListener("click", () => {
+    processPayment();
+  });
+
+  // Payment method selection
+  paymentMethods.forEach((method) => {
+    method.addEventListener("change", () => {
+      paymentForms.forEach((form) => (form.style.display = "none"));
+      document.getElementById(`${method.id}Form`).style.display = "block";
     });
-    
-    // Add event listeners to quantity buttons
-    document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const index = parseInt(btn.getAttribute('data-index'));
-            updateQuantity(index, -1);
-        });
+  });
+});
+
+// ===== Update Cart Display =====
+function updateCartDisplay() {
+  const emptyCart = document.querySelector(".empty-cart");
+  // Clear current items (all except the empty cart div)
+  cartItemsContainer
+    .querySelectorAll(".cart-item")
+    .forEach((item) => item.remove());
+
+  if (cart.length === 0) {
+    emptyCart.style.display = "block";
+    // Update summary to zero
+    updateSummary(0, 0, 0);
+    return;
+  }
+
+  emptyCart.style.display = "none";
+
+  // Add cart items dynamically
+  cart.forEach((item, index) => {
+    const cartItem = document.createElement("div");
+    cartItem.classList.add("cart-item");
+
+    cartItem.innerHTML = `
+                <img src="${item.image}" alt="${
+      item.title
+    }" class="cart-item-img">
+                <div class="cart-item-details">
+                    <div>
+                        <h3 class="cart-item-title">${item.title}</h3>
+                        <p>Size: ${item.size}</p>
+                        <p class="cart-item-price">$${(
+                          item.price * item.quantity
+                        ).toFixed(2)}</p>
+                    </div>
+                </div>
+                <div class="cart-item-actions">
+                    <div class="quantity-selector">
+                        <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                        <input type="number" value="${
+                          item.quantity
+                        }" min="1" class="quantity-input">
+                        <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <span class="remove-item">Remove</span>
+                </div>
+            `;
+
+    // Add event listeners for quantity controls and remove button
+    const minusBtn = cartItem.querySelector(".minus");
+    const plusBtn = cartItem.querySelector(".plus");
+    const quantityInput = cartItem.querySelector(".quantity-input");
+    const removeBtn = cartItem.querySelector(".remove-item");
+
+    minusBtn.addEventListener("click", () => {
+      if (item.quantity > 1) {
+        item.quantity--;
+        quantityInput.value = item.quantity;
+        updateCart();
+      }
     });
-    
-    document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const index = parseInt(btn.getAttribute('data-index'));
-            updateQuantity(index, 1);
-        });
+
+    plusBtn.addEventListener("click", () => {
+      item.quantity++;
+      quantityInput.value = item.quantity;
+      updateCart();
     });
-    
-    // Add event listeners to remove buttons
-    document.querySelectorAll('.remove-item').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const index = parseInt(btn.getAttribute('data-index'));
-            removeItem(index);
-        });
+
+    quantityInput.addEventListener("change", () => {
+      let val = parseInt(quantityInput.value);
+      if (isNaN(val) || val < 1) {
+        quantityInput.value = item.quantity;
+      } else {
+        item.quantity = val;
+        updateCart();
+      }
     });
+
+    removeBtn.addEventListener("click", () => {
+      cart.splice(index, 1);
+      updateCart();
+    });
+
+    cartItemsContainer.appendChild(cartItem);
+  });
+
+  // Update summary with current totals
+  const subtotal = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+  const tax = subtotal * 0.08;
+  const total = subtotal + tax;
+  updateSummary(subtotal, tax, total);
 }
 
-// Update item quantity
-function updateQuantity(index, change) {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    if (index >= 0 && index < cart.length) {
-        cart[index].quantity += change;
-        
-        // Remove item if quantity reaches 0
-        if (cart[index].quantity <= 0) {
-            cart.splice(index, 1);
-        }
-        
-        localStorage.setItem('cart', JSON.stringify(cart));
-        displayCartItems();
-        updateCartSummary();
-        updateCartCount();
-    }
+function updateSummary(subtotal, tax, total) {
+  const summarySubtotal = document.querySelector(
+    ".summary-row:nth-child(1) span:last-child"
+  );
+  const summaryTax = document.querySelector(
+    ".summary-row:nth-child(3) span:last-child"
+  );
+  const summaryTotal = document.querySelector(".summary-total span:last-child");
+
+  if (summarySubtotal && summaryTax && summaryTotal) {
+    summarySubtotal.textContent = `$${subtotal.toFixed(2)}`;
+    summaryTax.textContent = `$${tax.toFixed(2)}`;
+    summaryTotal.textContent = `$${total.toFixed(2)}`;
+  }
 }
 
-// Remove item from cart
-// Remove item from cart
-function removeItem(index) {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    if (index >= 0 && index < cart.length) {
-        cart.splice(index, 1);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        displayCartItems();
-        updateCartSummary();
-        updateCartCount();
-        
-        // Show notification
-        showNotification('Item removed from cart');
-    }
+// ===== Update Payment Summary =====
+function updatePaymentSummary() {
+  const subtotal = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  const tax = subtotal * 0.08; // 8% tax
+  const total = subtotal + tax;
+
+  document.getElementById("paymentSubtotal").textContent = `$${subtotal.toFixed(
+    2
+  )}`;
+  document.getElementById("paymentTax").textContent = `$${tax.toFixed(2)}`;
+  document.getElementById("paymentTotal").textContent = `$${total.toFixed(2)}`;
 }
 
-// Update cart summary
-function updateCartSummary() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-    const shipping = subtotal > 0 ? (subtotal > 100 ? 0 : 9.99) : 0;
-    const tax = subtotal * 0.08; // Assuming 8% tax rate
-    
-    subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
-    shippingElement.textContent = shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`;
-    taxElement.textContent = `$${tax.toFixed(2)}`;
-    totalElement.textContent = `$${(subtotal + shipping + tax).toFixed(2)}`;
+// ===== Process Payment =====
+function processPayment() {
+  // In a real app, validate form and process payment here
+
+  placeOrderBtn.disabled = true;
+  placeOrderBtn.textContent = "Processing...";
+
+  setTimeout(() => {
+    paymentView.style.display = "none";
+    orderConfirmation.style.display = "block";
+
+    // Clear cart
+    cart = [];
+    saveCart();
+    updateCartCount();
+
+    placeOrderBtn.disabled = false;
+    placeOrderBtn.textContent = "Place Order";
+  }, 2000);
 }
 
-// Update cart count in navbar
+// ===== Update Cart Count =====
 function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-    document.querySelector('.cart-count').textContent = totalItems;
+  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+  cartCount.textContent = totalItems;
+  saveCart();
 }
 
-// Show notification
-function showNotification(message) {
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.textContent = message;
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 10);
-
-    setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 3000);
+// ===== Save Cart to localStorage =====
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-// Proceed to checkout
-checkoutBtn.addEventListener('click', () => {
-    // In a real application, this would redirect to a checkout page
-    alert('Proceeding to checkout!');
-});
+// ===== Update Cart (display + count) =====
+function updateCart() {
+  updateCartDisplay();
+  updateCartCount();
+}
 
-// Initialize page
-document.addEventListener('DOMContentLoaded', () => {
-    initCartPage();
-    
-    // Add notification styles dynamically
-    const style = document.createElement('style');
-    style.textContent = `
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #333;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 4px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1000;
-        }
-        .notification.show {
-            opacity: 1;
-        }
-        
-        /* Cart specific styles */
-        .cart-section {
-            padding: 80px 0;
-        }
-        
-        .cart-content {
-            display: flex;
-            gap: 30px;
-            margin-top: 30px;
-        }
-        
-        .cart-items {
-            flex: 2;
-        }
-        
-        .cart-summary {
-            flex: 1;
-            background: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            height: fit-content;
-        }
-        
-        .cart-summary h2 {
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-        
-        .summary-details {
-            margin-bottom: 25px;
-        }
-        
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .summary-row.total {
-            font-weight: bold;
-            font-size: 1.1rem;
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .checkout-btn {
-            width: 100%;
-            padding: 15px;
-            font-size: 1rem;
-        }
-        
-        .cart-item {
-            display: flex;
-            align-items: center;
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .cart-item-image {
-            width: 120px;
-            height: 120px;
-            margin-right: 20px;
-        }
-        
-        .cart-item-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-        
-        .cart-item-details {
-            flex: 1;
-        }
-        
-        .cart-item-details h3 {
-            margin-bottom: 10px;
-        }
-        
-        .cart-item-price {
-            font-weight: bold;
-            color: #ff6b6b;
-            margin-top: 10px;
-        }
-        
-        .cart-item-quantity {
-            display: flex;
-            align-items: center;
-            margin: 0 30px;
-        }
-        
-        .cart-item-quantity .quantity {
-            margin: 0 15px;
-            font-weight: bold;
-        }
-        
-        .quantity-btn {
-            width: 30px;
-            height: 30px;
-            border: 1px solid #ddd;
-            background: none;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        
-        .quantity-btn:hover {
-            background: #f5f5f5;
-        }
-        
-        .remove-item {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            color: #999;
-            cursor: pointer;
-            padding: 5px;
-        }
-        
-        .remove-item:hover {
-            color: #ff6b6b;
-        }
-        
-        .empty-cart {
-            text-align: center;
-            padding: 50px 0;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .empty-cart i {
-            font-size: 3rem;
-            color: #ddd;
-            margin-bottom: 20px;
-        }
-        
-        .empty-cart h2 {
-            margin-bottom: 10px;
-        }
-        
-        .empty-cart p {
-            margin-bottom: 30px;
-            color: #777;
-        }
-        
-        @media (max-width: 768px) {
-            .cart-content {
-                flex-direction: column;
-            }
-            
-            .cart-item {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .cart-item-image {
-                margin-right: 0;
-                margin-bottom: 15px;
-            }
-            
-            .cart-item-quantity {
-                margin: 15px 0;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-});
+
+  // Elements
+  const creditCardRadio = document.getElementById('creditCard');
+  const paypalRadio = document.getElementById('paypal');
+  const creditCardForm = document.getElementById('creditCardForm');
+  const paypalForm = document.getElementById('paypalForm');
+//   const placeOrderBtn = document.getElementById('placeOrderBtn');
+  const backToCartBtn = document.getElementById('backToCart');
+
+  // Toggle payment forms based on selection
+  function togglePaymentForms() {
+    if (creditCardRadio.checked) {
+      creditCardForm.style.display = 'block';
+      paypalForm.style.display = 'none';
+      placeOrderBtn.style.display = 'inline-block'; // show place order button
+    } else if (paypalRadio.checked) {
+      creditCardForm.style.display = 'none';
+      paypalForm.style.display = 'block';
+      placeOrderBtn.style.display = 'none'; // hide place order button because PayPal button handles payment
+    }
+  }
+
+  creditCardRadio.addEventListener('change', togglePaymentForms);
+  paypalRadio.addEventListener('change', togglePaymentForms);
+  togglePaymentForms(); // initial call
+
+  // Simple validation for credit card fields (basic, you can improve)
+  function validateCreditCardForm() {
+    const cardNumber = document.getElementById('cardNumber').value.trim();
+    const cardName = document.getElementById('cardName').value.trim();
+    const expiryDate = document.getElementById('expiryDate').value.trim();
+    const cvv = document.getElementById('cvv').value.trim();
+
+    // Basic checks
+    if (
+      !cardNumber.match(/^\d{13,19}$/) &&
+      !cardNumber.replace(/\s+/g, '').match(/^\d{13,19}$/)
+    ) {
+      alert('Please enter a valid card number (13 to 19 digits).');
+      return false;
+    }
+    if (cardName.length < 2) {
+      alert('Please enter the name on the card.');
+      return false;
+    }
+    if (!expiryDate.match(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/)) {
+      alert('Expiry date must be in MM/YY format.');
+      return false;
+    }
+    if (!cvv.match(/^\d{3,4}$/)) {
+      alert('Please enter a valid 3 or 4 digit CVV.');
+      return false;
+    }
+    return true;
+  }
+
+  // On clicking "Place Order" for credit card payment
+  placeOrderBtn.addEventListener('click', () => {
+    if (!creditCardRadio.checked) return; // ignore if not credit card selected
+
+    if (!validateCreditCardForm()) return;
+
+    // Here you would send payment info to your backend/payment gateway
+
+    alert('Credit Card payment processed successfully!');
+
+    // You can then show order confirmation and clear cart, etc.
+  });
+
+  // PayPal Buttons render (replace YOUR_PAYPAL_CLIENT_ID in script src with your actual client id)
+  paypal.Buttons({
+    style: {
+      layout: 'vertical',
+      color: 'blue',
+      shape: 'rect',
+      label: 'paypal'
+    },
+    createOrder: function (data, actions) {
+      // Use your cart total here or from your system
+      const total = parseFloat(document.getElementById('paymentTotal').textContent.replace('$', ''));
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: total.toFixed(2)
+          }
+        }]
+      });
+    },
+    onApprove: function (data, actions) {
+      return actions.order.capture().then(function (details) {
+        alert('Transaction completed by ' + details.payer.name.given_name + '!');
+        // Show order confirmation, clear cart, etc.
+      });
+    },
+    onError: function (err) {
+      alert('An error occurred during the PayPal transaction.');
+      console.error(err);
+    }
+  }).render('#paypal-button-container');
+
+  // Back to cart button action (example)
+  backToCartBtn.addEventListener('click', () => {
+    // Your code to switch view back to cart
+    // Example: hide payment view and show cart view
+    document.getElementById('paymentView').style.display = 'none';
+    document.getElementById('cartView').style.display = 'block';
+  });

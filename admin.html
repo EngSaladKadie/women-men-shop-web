@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kadie Shoe Store Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="user.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Kadiye shoes store</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#products"><i class="fas fa-shoe-prints"></i> Products</a></li>
+                    <li><a href="#inventory"><i class="fas fa-boxes"></i> Inventory</a></li>
+                    <li><a href="#transactions"><i class="fas fa-receipt"></i> Transactions</a></li>
+                    <li><a href="#analytics"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                    <li><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header Bar -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="user-profile">
+                        <img src="../../Pictures/two.jpg" alt="Admin">
+                        <span>Eng kadie</span>
+                        <button id="admin-logout" class="btn logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Widgets -->
+            <section class="dashboard-widgets">
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>Total Sales</h3>
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="widget-content">
+                        <span class="big-number">$24,560</span>
+                        <span class="trend up"><i class="fas fa-arrow-up"></i> 12% from last month</span>
+                    </div>
+                </div>
+                
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>New Orders</h3>
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="widget-content">
+                        <span class="big-number">142</span>
+                        <span class="trend down"><i class="fas fa-arrow-down"></i> 5% from last month</span>
+                    </div>
+                </div>
+                
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>Products</h3>
+                        <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <div class="widget-content">
+                        <span class="big-number">87</span>
+                        <span class="trend up"><i class="fas fa-arrow-up"></i> 8 new this month</span>
+                    </div>
+                </div>
+                
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>Customers</h3>
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="widget-content">
+                        <span class="big-number">1,245</span>
+                        <span class="trend up"><i class="fas fa-arrow-up"></i> 15% from last month</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Transactions and Product Management -->
+            <section class="content-section">
+                <div class="section-column">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Recent Transactions</h3>
+                            <button class="btn small">View All</button>
+                        </div>
+                        <div class="card-content">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactions-list">
+                                    <!-- Transactions will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-column">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Top Selling Products</h3>
+                            <button class="btn small">View All</button>
+                        </div>
+                        <div class="card-content">
+                            <div id="top-products" class="products-list">
+                                <!-- Top products will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Product Management Section -->
+            <section class="content-section full-width">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Product Management</h3>
+                        <button id="add-product-btn" class="btn"><i class="fas fa-plus"></i> Add Product</button>
+                    </div>
+                    <div class="card-content">
+                        <div class="product-filters">
+                            <select id="category-filter">
+                                <option value="all">All Categories</option>
+                                <option value="running">Running</option>
+                                <option value="casual">Casual</option>
+                                <option value="basketball">Basketball</option>
+                                <option value="soccer">Soccer</option>
+                            </select>
+                            <select id="size-filter">
+                                <option value="all">All Sizes</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                            <input type="text" id="search-products" placeholder="Search products...">
+                        </div>
+                        <div id="products-list" class="products-grid">
+                            <!-- Products will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Product Modal (hidden by default) -->
+        <div id="product-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="modal-title">Add New Product</h2>
+                <form id="product-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-name">Product Name</label>
+                            <input type="text" id="product-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-sku">SKU</label>
+                            <input type="text" id="product-sku" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-price">Price ($)</label>
+                            <input type="number" id="product-price" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-cost">Cost ($)</label>
+                            <input type="number" id="product-cost" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-profit">Profit ($)</label>
+                            <input type="number" id="product-profit" step="0.01" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-category">Category</label>
+                            <select id="product-category" required>
+                                <option value="running">Running</option>
+                                <option value="casual">Casual</option>
+                                <option value="basketball">Basketball</option>
+                                <option value="soccer">Soccer</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-brand">Brand</label>
+                            <input type="text" id="product-brand" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-colors">Colors (comma separated)</label>
+                            <input type="text" id="product-colors" placeholder="Red, Blue, Black" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-sizes">Sizes (comma separated)</label>
+                            <input type="text" id="product-sizes" placeholder="6, 7, 8, 9, 10" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-description">Description</label>
+                        <textarea id="product-description" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product-images">Product Images</label>
+                        <input type="file" id="product-images" multiple accept="image/*">
+                        <div id="image-preview" class="image-preview"></div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn cancel">Cancel</button>
+                        <button type="submit" class="btn primary">Save Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="user.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

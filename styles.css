@@ -21,6 +21,9 @@ body {
   color: var(--dark);
   line-height: 1.6;
 }
+section{
+    margin-left: 5px;
+}
 
 .container {
   max-width: 1200px;
@@ -908,6 +911,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* flex-direction: column; */
     margin-bottom: 30px;
 }
 
@@ -933,6 +937,7 @@ body {
 .filter-header {
     display: flex;
     justify-content: space-between;
+    
     align-items: center;
     margin-bottom: 20px;
     padding-bottom: 10px;
@@ -968,6 +973,7 @@ body {
     font-weight: 600;
     margin-bottom: 15px;
     display: flex;
+    /* flex-direction: column; */
     justify-content: space-between;
     align-items: center;
     cursor: pointer;

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Authentication</title>
+    <link rel="stylesheet" href="user.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Welcome to Our System</h1>
+        
+        <div id="auth-options" class="auth-options">
+            <button id="login-btn" class="btn">Login</button>
+            <button id="logout-btn" class="btn">Logout</button>
+        </div>
+        
+        <div id="login-form" class="form-container hidden">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn">Submit</button>
+                <button type="button" id="cancel-login" class="btn cancel">Cancel</button>
+            </form>
+        </div>
+        
+        <div id="auth-status" class="status-message"></div>
+    </div>
+
+    <script src="user.js"></script>
+</body>
+</html>
