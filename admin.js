@@ -150,7 +150,7 @@ function loadDashboardData() {
   const transactions = [
     {
       id: 1001,
-      customer: "John Smith",
+      customer: "salad yusuf ",
       date: "2023-06-15",
       amount: 259.98,
       status: "completed",
@@ -158,7 +158,7 @@ function loadDashboardData() {
     },
     {
       id: 1002,
-      customer: "Sarah Johnson",
+      customer: "maryann ahmed",
       date: "2023-06-14",
       amount: 149.99,
       status: "shipped",
@@ -166,7 +166,7 @@ function loadDashboardData() {
     },
     {
       id: 1003,
-      customer: "Mike Brown",
+      customer: "ahmed ali",
       date: "2023-06-14",
       amount: 329.97,
       status: "processing",
@@ -174,7 +174,7 @@ function loadDashboardData() {
     },
     {
       id: 1004,
-      customer: "Emily Davis",
+      customer: "Geede muxumud",
       date: "2023-06-13",
       amount: 89.99,
       status: "completed",
@@ -182,7 +182,7 @@ function loadDashboardData() {
     },
     {
       id: 1005,
-      customer: "David Wilson",
+      customer: "sahra jaamac",
       date: "2023-06-12",
       amount: 179.98,
       status: "completed",

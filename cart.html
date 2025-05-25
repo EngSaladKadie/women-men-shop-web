@@ -671,6 +671,312 @@
         }
       }
 
+      /* Payment Method Styles */
+      /* Payment View Styles */
+      .payment-view {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .back-to-cart {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #0070ba;
+        font-weight: 500;
+        margin-bottom: 24px;
+        cursor: pointer;
+        user-select: none;
+        transition: color 0.2s;
+      }
+
+      .back-to-cart:hover {
+        color: #005ea6;
+      }
+
+      .page-title {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 32px;
+        color: #2d333a;
+      }
+
+      .payment-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+
+      .payment-methods {
+        background: #fff;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .payment-methods-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #2d333a;
+      }
+
+      .payment-method {
+        border: 1px solid #e1e3e6;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        overflow: hidden;
+      }
+
+      .payment-method-header {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+        cursor: pointer;
+        background-color: #f9fafb;
+        transition: background-color 0.2s;
+      }
+
+      .payment-method-header:hover {
+        background-color: #f1f3f5;
+      }
+
+      .payment-method-label {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .payment-method-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #2d333a;
+        flex-grow: 1;
+      }
+
+      .payment-method-icon {
+        display: flex;
+        align-items: center;
+      }
+
+      .payment-icon {
+        width: 24px;
+        height: 24px;
+        color: #6c757d;
+      }
+
+      .payment-method-svg {
+        width: 48px;
+        height: 16px;
+      }
+
+      .payment-form {
+        padding: 16px;
+        border-top: 1px solid #e1e3e6;
+        background-color: #fff;
+      }
+
+      .form-group {
+        margin-bottom: 16px;
+      }
+
+      .form-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: #495057;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: border-color 0.2s;
+      }
+
+      .form-input:focus {
+        border-color: #0070ba;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 112, 186, 0.2);
+      }
+
+      .input-wrapper {
+        position: relative;
+      }
+
+      .card-icons {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        gap: 4px;
+      }
+
+      .card-icon {
+        width: 32px;
+        height: 20px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.5;
+      }
+
+      .card-icon.visa {
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iIzFBMjE2OSIgZD0iTTkgMTJoLS43TDYgNy4xVjEySDRWNmgyaDNjLjUgMCAuOS4zIDEgLjhsMSA1Yz4uMS41LS4yIDEuMS0uOCAxLjJMMTAgMTJoLTF6bTkgMGgtM1Y3aDN2NXptLTUgMGgtM1Y3aDN2NXptLTkgN2gxNnYtMkg0djJ6Ii8+PC9zdmc+");
+      }
+
+      .card-icon.mastercard {
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iIjFBMjE2OSIgZD0iTTEyIDYuNTJjLTEuNzUgMC0zLjI5IDEuMDQtMy45OSAyLjVMMTAgMTJoNHYtLjA4Yy0uNjEtMS40Ni0yLjI0LTIuNS00LTIuNXptMCA2YzEuNzUgMCAzLjI5LTEuMDQgMy45OS0yLjVMMTQgMTJoLTR2LjA4Yy42MSAxLjQ2IDIuMjQgMi41IDQgMi41eiIvPjxwYXRoIGZpbGw9IiNGRUIxMDIiIGQ9Ik0xMiA2LjUyYzEuNzUgMCAzLjI5IDEuMDQgMy45OSAyLjVMMTYgMTJoNHYtLjA4Yy0uNjEtMS40Ni0yLjI0LTIuNS00LTIuNXptMCA2Yy0xLjc1IDAtMy4yOS0xLjA0LTMuOTktMi41TDggMTJoNHYuMDhjLS42MSAxLjQ2LTIuMjQgMi41LTQgMi41eiIvPjwvc3ZnPg==");
+      }
+
+      .card-icon.amex {
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iIzAwNkZDQyIgZD0iTTQgNmgxNnYxMkg0VjZ6Ii8+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTcgMTJoMXYyaDJ2LTJIMnYtMmg1di0yaC0ydjJIN3ptOSAwaDF2Mmgydi0yaC02di0yaDJ2MmgxeiIvPjwvc3ZnPg==");
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .cvv-help {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #6c757d;
+        cursor: help;
+      }
+
+      .paypal-disclaimer {
+        color: #6c757d;
+        font-size: 14px;
+        margin-bottom: 16px;
+      }
+
+      .paypal-button-container {
+        margin-top: 16px;
+      }
+
+      .payment-summary {
+        background: #fff;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        align-self: flex-start;
+        position: sticky;
+        top: 24px;
+      }
+
+      .summary-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #2d333a;
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        font-size: 14px;
+      }
+
+      .summary-label {
+        color: #6c757d;
+      }
+
+      .summary-value {
+        color: #2d333a;
+        font-weight: 500;
+      }
+
+      .summary-total {
+        display: flex;
+        justify-content: space-between;
+        margin: 24px 0;
+        padding-top: 16px;
+        border-top: 1px solid #e9ecef;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .total-label {
+        color: #2d333a;
+      }
+
+      .total-value {
+        color: #0070ba;
+      }
+
+      .checkout-btn {
+        width: 100%;
+        padding: 14px;
+        background-color: #0070ba;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .checkout-btn:hover {
+        background-color: #005ea6;
+      }
+
+      .secure-checkout {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 16px;
+        font-size: 12px;
+        color: #6c757d;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .payment-container {
+          grid-template-columns: 1fr;
+        }
+
+        .payment-summary {
+          position: static;
+        }
+      }
+
       @media (max-width: 576px) {
         .container {
           width: 95%;
@@ -813,12 +1119,13 @@
 
         <!-- Payment View -->
         <div class="payment-view" id="paymentView" style="display: none">
-          <div
-            class="back-to-cart"
-            id="backToCart"
-            style="cursor: pointer; user-select: none"
-          >
-            <i class="fas fa-arrow-left"></i>
+          <div class="back-to-cart" id="backToCart">
+            <svg class="back-arrow" viewBox="0 0 24 24" width="20" height="20">
+              <path
+                fill="currentColor"
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
             <span>Back to Cart</span>
           </div>
 
@@ -826,53 +1133,91 @@
 
           <div class="payment-container">
             <div class="payment-methods">
-              <h3>Payment Method</h3>
+              <h3 class="payment-methods-title">Payment Method</h3>
 
               <!-- Credit Card -->
               <div class="payment-method">
-                <div class="payment-method-header">
+                <div
+                  class="payment-method-header"
+                  role="button"
+                  aria-expanded="true"
+                  aria-controls="creditCardForm"
+                >
                   <input
                     type="radio"
                     id="creditCard"
                     name="paymentMethod"
-                    class="payment-method-radio"
+                    class="payment-method-radio sr-only"
                     checked
                   />
-                  <label for="creditCard" class="payment-method-title"
-                    >Credit Card</label
-                  >
-                  <div class="payment-method-icon">
-                    <i class="far fa-credit-card"></i>
-                  </div>
+                  <label for="creditCard" class="payment-method-label">
+                    <span class="payment-method-title">Credit Card</span>
+                    <span class="payment-method-icon">
+                      <svg
+                        class="payment-icon"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"
+                        />
+                      </svg>
+                    </span>
+                  </label>
                 </div>
                 <form id="creditCardForm" class="payment-form">
                   <div class="form-group">
-                    <label for="cardNumber">Card Number</label>
-                    <input
-                      type="text"
-                      id="cardNumber"
-                      placeholder="1234 5678 9012 3456"
-                      maxlength="19"
-                      autocomplete="cc-number"
-                      required
-                    />
+                    <label for="cardNumber" class="form-label"
+                      >Card Number</label
+                    >
+                    <div class="input-wrapper">
+                      <input
+                        type="text"
+                        id="cardNumber"
+                        class="form-input"
+                        placeholder="1234 5678 9012 3456"
+                        maxlength="19"
+                        autocomplete="cc-number"
+                        required
+                        data-lpignore="true"
+                      />
+                      <div class="card-icons">
+                        <div class="card-icon visa" title="Visa"></div>
+                        <div
+                          class="card-icon mastercard"
+                          title="Mastercard"
+                        ></div>
+                        <div
+                          class="card-icon amex"
+                          title="American Express"
+                        ></div>
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group">
-                    <label for="cardName">Name on Card</label>
+                    <label for="cardName" class="form-label"
+                      >Name on Card</label
+                    >
                     <input
                       type="text"
                       id="cardName"
-                      placeholder="salad yusuf kadie"
+                      class="form-input"
+                      placeholder="John Doe"
                       autocomplete="cc-name"
                       required
                     />
                   </div>
                   <div class="form-row">
                     <div class="form-group">
-                      <label for="expiryDate">Expiry Date (MM/YY)</label>
+                      <label for="expiryDate" class="form-label"
+                        >Expiry Date</label
+                      >
                       <input
                         type="text"
                         id="expiryDate"
+                        class="form-input"
                         placeholder="MM/YY"
                         maxlength="5"
                         autocomplete="cc-exp"
@@ -880,15 +1225,30 @@
                       />
                     </div>
                     <div class="form-group">
-                      <label for="cvv">CVV</label>
-                      <input
-                        type="password"
-                        id="cvv"
-                        placeholder="123"
-                        maxlength="4"
-                        autocomplete="cc-csc"
-                        required
-                      />
+                      <label for="cvv" class="form-label">CVV</label>
+                      <div class="input-wrapper">
+                        <input
+                          type="password"
+                          id="cvv"
+                          class="form-input"
+                          placeholder="•••"
+                          maxlength="4"
+                          autocomplete="cc-csc"
+                          required
+                        />
+                        <button
+                          type="button"
+                          class="cvv-help"
+                          aria-label="What is CVV?"
+                        >
+                          <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path
+                              fill="currentColor"
+                              d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </form>
@@ -897,7 +1257,7 @@
               <!-- PayPal -->
               <div class="payment-method payment-method--paypal">
                 <div
-                  class="payment-method__header"
+                  class="payment-method-header"
                   role="button"
                   aria-expanded="false"
                   aria-controls="paypalForm"
@@ -906,13 +1266,13 @@
                     type="radio"
                     id="paypal"
                     name="paymentMethod"
-                    class="payment-method__radio sr-only"
+                    class="payment-method-radio sr-only"
                   />
-                  <label for="paypal" class="payment-method__label">
-                    <span class="payment-method__title">PayPal</span>
-                    <span class="payment-method__icon">
+                  <label for="paypal" class="payment-method-label">
+                    <span class="payment-method-title">PayPal</span>
+                    <span class="payment-method-icon">
                       <svg
-                        class="payment-method__svg"
+                        class="payment-method-svg"
                         viewBox="0 0 38 24"
                         role="img"
                         aria-label="PayPal"
@@ -945,16 +1305,16 @@
                     </span>
                   </label>
                 </div>
-                <div class="payment-method__content" id="paypalForm">
-                  <div class="payment-method__disclaimer">
-                    <p class="payment-method__text">
+                <div class="payment-form" id="paypalForm">
+                  <div class="paypal-disclaimer">
+                    <p>
                       You'll be redirected to PayPal to complete your payment
                       securely.
                     </p>
                   </div>
                   <div
                     id="paypal-button-container"
-                    class="paypal-button__container"
+                    class="paypal-button-container"
                   ></div>
                 </div>
               </div>
@@ -963,24 +1323,37 @@
             <div class="payment-summary">
               <h3 class="summary-title">Order Summary</h3>
               <div class="summary-row">
-                <span>Subtotal</span>
-                <span id="paymentSubtotal">$0.00</span>
+                <span class="summary-label">Subtotal</span>
+                <span class="summary-value" id="paymentSubtotal">$0.00</span>
               </div>
               <div class="summary-row">
-                <span>Shipping</span>
-                <span>Free</span>
+                <span class="summary-label">Shipping</span>
+                <span class="summary-value">Free</span>
               </div>
               <div class="summary-row">
-                <span>Tax</span>
-                <span id="paymentTax">$0.00</span>
+                <span class="summary-label">Tax</span>
+                <span class="summary-value" id="paymentTax">$0.00</span>
               </div>
               <div class="summary-total">
-                <span>Total</span>
-                <span id="paymentTotal">$0.00</span>
+                <span class="total-label">Total</span>
+                <span class="total-value" id="paymentTotal">$0.00</span>
               </div>
-              <button class="btn btn-secondary checkout-btn" id="placeOrderBtn">
+              <button
+                class="btn btn-primary checkout-btn"
+                id="placeOrderBtn"
+                type="button"
+              >
                 Place Order
               </button>
+              <div class="secure-checkout">
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                  <path
+                    fill="currentColor"
+                    d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"
+                  />
+                </svg>
+                <span>Secure Checkout</span>
+              </div>
             </div>
           </div>
         </div>
