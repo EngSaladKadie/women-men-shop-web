@@ -1,207 +1,463 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Sample inventory data (in a real app, this would come from an API)
+    let inventoryData = [
+        {
+            id: 1,
+            productId: 101,
+            productName: "Air Runner Pro",
+            sku: "RUN-ARP-BL-10",
+            category: "running",
+            size: "10",
+            color: "Black",
+            quantity: 15,
+            threshold: 5,
+            price: 129.99,
+            location: "A1-B2",
+            status: "in-stock",
+            lastUpdated: "2023-05-15"
+        },
+        {
+            id: 2,
+            productId: 102,
+            productName: "Casual Comfort Walkers",
+            sku: "CAS-CCW-WH-8",
+            category: "casual",
+            size: "8",
+            color: "White",
+            quantity: 3,
+            threshold: 5,
+            price: 89.99,
+            location: "B3-C1",
+            status: "low-stock",
+            lastUpdated: "2023-05-18"
+        },
+        {
+            id: 3,
+            productId: 103,
+            productName: "Bounce Basketball Elite",
+            sku: "BBL-BBE-RD-11",
+            category: "basketball",
+            size: "11",
+            color: "Red",
+            quantity: 0,
+            threshold: 3,
+            price: 149.99,
+            location: "C2-D3",
+            status: "out-of-stock",
+            lastUpdated: "2023-05-10"
+        },
+        {
+            id: 4,
+            productId: 104,
+            productName: "Sprint Soccer Cleats",
+            sku: "SOC-SSC-BL-9",
+            category: "soccer",
+            size: "9",
+            color: "Blue",
+            quantity: 7,
+            threshold: 5,
+            price: 119.99,
+            location: "D4-A2",
+            status: "in-stock",
+            lastUpdated: "2023-05-20"
+        },
+        {
+            id: 5,
+            productId: 105,
+            productName: "Trail Hiker Pro",
+            sku: "OUT-THP-GN-10",
+            category: "outdoor",
+            size: "10",
+            color: "Green",
+            quantity: 12,
+            threshold: 5,
+            price: 139.99,
+            location: "E1-F3",
+            status: "in-stock",
+            lastUpdated: "2023-05-12"
+        }
+    ];
+
     // DOM Elements
+    const inventoryTable = document.getElementById('inventory-table');
     const inventoryList = document.getElementById('inventory-list');
     const inventoryModal = document.getElementById('inventory-modal');
-    const addInventoryBtn = document.getElementById('add-inventory');
-    const closeModalBtn = document.querySelector('.close-modal');
-    const cancelBtn = document.querySelector('.cancel');
+    const confirmModal = document.getElementById('confirm-modal');
     const inventoryForm = document.getElementById('inventory-form');
-    const inventoryQuantity = document.getElementById('inventory-quantity');
-    const inventoryCost = document.getElementById('inventory-cost');
-    const inventoryTotal = document.getElementById('inventory-total');
-    const categoryFilter = document.getElementById('inventory-category-filter');
-    const statusFilter = document.getElementById('inventory-status-filter');
-    const searchInventory = document.getElementById('search-inventory');
+    const addInventoryBtn = document.getElementById('add-inventory-btn');
+    const closeModalBtns = document.querySelectorAll('.close-modal, .cancel');
     const prevPageBtn = document.getElementById('prev-page');
     const nextPageBtn = document.getElementById('next-page');
     const pageInfo = document.getElementById('page-info');
-    const stockMovements = document.getElementById('stock-movements');
-    const inventoryAlerts = document.getElementById('inventory-alerts');
-    const exportBtn = document.getElementById('export-inventory');
-    const importBtn = document.getElementById('import-inventory');
-
-    // Sample data - in a real app, this would come from an API
-    let inventoryData = [
-        { id: 1, productId: 'SH001', name: 'Nike Air Max', category: 'running', size: '9', color: 'Black', stock: 15, lowStockAlert: 5, status: 'in-stock', lastUpdated: '2023-05-15' },
-        { id: 2, productId: 'SH002', name: 'Adidas Superstar', category: 'casual', size: '8', color: 'White', stock: 3, lowStockAlert: 5, status: 'low-stock', lastUpdated: '2023-05-18' },
-        { id: 3, productId: 'SH003', name: 'Puma RS-X', category: 'casual', size: '10', color: 'Red', stock: 0, lowStockAlert: 5, status: 'out-of-stock', lastUpdated: '2023-05-10' },
-        { id: 4, productId: 'SH004', name: 'Nike React Infinity', category: 'running', size: '11', color: 'Blue', stock: 8, lowStockAlert: 5, status: 'in-stock', lastUpdated: '2023-05-20' },
-        { id: 5, productId: 'SH005', name: 'Adidas Ultraboost', category: 'running', size: '9', color: 'Black', stock: 12, lowStockAlert: 5, status: 'in-stock', lastUpdated: '2023-05-17' },
-        { id: 6, productId: 'SH006', name: 'New Balance 574', category: 'casual', size: '7', color: 'Gray', stock: 4, lowStockAlert: 5, status: 'low-stock', lastUpdated: '2023-05-19' },
-        { id: 7, productId: 'SH007', name: 'Nike Jordan 1', category: 'basketball', size: '10', color: 'Red', stock: 6, lowStockAlert: 5, status: 'in-stock', lastUpdated: '2023-05-16' },
-        { id: 8, productId: 'SH008', name: 'Adidas Predator', category: 'soccer', size: '8', color: 'Black', stock: 7, lowStockAlert: 5, status: 'in-stock', lastUpdated: '2023-05-14' },
-        { id: 9, productId: 'SH009', name: 'Puma Future', category: 'soccer', size: '9', color: 'White', stock: 2, lowStockAlert: 5, status: 'low-stock', lastUpdated: '2023-05-21' },
-        { id: 10, productId: 'SH010', name: 'Nike Mercurial', category: 'soccer', size: '10', color: 'Multi', stock: 9, lowStockAlert: 5, status: 'in-stock', lastUpdated: '2023-05-12' }
-    ];
-
-    let stockMovementData = [
-        { date: '2023-05-21', product: 'Nike Air Max', type: 'Sale', quantity: -2, user: 'John Doe' },
-        { date: '2023-05-20', product: 'Adidas Ultraboost', type: 'Restock', quantity: 5, user: 'Jane Smith' },
-        { date: '2023-05-19', product: 'New Balance 574', type: 'Sale', quantity: -1, user: 'Mike Johnson' },
-        { date: '2023-05-18', product: 'Puma RS-X', type: 'Return', quantity: 1, user: 'Sarah Williams' },
-        { date: '2023-05-17', product: 'Nike React Infinity', type: 'Sale', quantity: -3, user: 'David Brown' }
-    ];
-
-    let alertData = [
-        { type: 'warning', message: 'Adidas Superstar (Size 8) is low on stock (3 remaining)', date: '2 hours ago' },
-        { type: 'danger', message: 'Puma RS-X (Size 10) is out of stock', date: '1 day ago' },
-        { type: 'warning', message: 'New Balance 574 (Size 7) is low on stock (4 remaining)', date: '2 days ago' },
-        { type: 'warning', message: 'Puma Future (Size 9) is low on stock (2 remaining)', date: '3 days ago' }
-    ];
+    const inventorySearch = document.getElementById('inventory-search');
+    const categoryFilter = document.getElementById('inventory-category-filter');
+    const statusFilter = document.getElementById('inventory-status-filter');
+    const sortSelect = document.getElementById('inventory-sort');
+    const confirmActionBtn = document.getElementById('confirm-action');
 
     // Pagination variables
     let currentPage = 1;
-    const itemsPerPage = 5;
-    let filteredData = [...inventoryData];
+    const itemsPerPage = 10;
+    let filteredInventory = [];
 
     // Initialize the page
     function init() {
         renderInventoryTable();
-        renderStockMovements();
-        renderInventoryAlerts();
         setupEventListeners();
+    }
+
+    // Set up event listeners
+    function setupEventListeners() {
+        // Modal controls
+        addInventoryBtn.addEventListener('click', openAddInventoryModal);
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', closeModal);
+        });
+
+        // Form submission
+        inventoryForm.addEventListener('submit', handleInventorySubmit);
+
+        // Pagination
+        prevPageBtn.addEventListener('click', goToPrevPage);
+        nextPageBtn.addEventListener('click', goToNextPage);
+
+        // Filters and search
+        inventorySearch.addEventListener('input', applyFilters);
+        categoryFilter.addEventListener('change', applyFilters);
+        statusFilter.addEventListener('change', applyFilters);
+        sortSelect.addEventListener('change', applyFilters);
+
+        // Confirmation modal
+        confirmActionBtn.addEventListener('click', executeConfirmedAction);
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === inventoryModal) {
+                closeModal();
+            }
+            if (event.target === confirmModal) {
+                closeConfirmModal();
+            }
+        });
     }
 
     // Render inventory table
     function renderInventoryTable() {
         inventoryList.innerHTML = '';
         
+        // Apply filters and pagination
+        applyFilters();
+        
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
-        const paginatedData = filteredData.slice(startIndex, endIndex);
+        const paginatedItems = filteredInventory.slice(startIndex, endIndex);
         
-        if (paginatedData.length === 0) {
-            inventoryList.innerHTML = '<tr><td colspan="10" class="text-center">No inventory items found</td></tr>';
+        if (paginatedItems.length === 0) {
+            inventoryList.innerHTML = `
+                <tr>
+                    <td colspan="10" class="no-results">
+                        <i class="fas fa-box-open"></i>
+                        <p>No inventory items found</p>
+                    </td>
+                </tr>
+            `;
             return;
         }
         
-        paginatedData.forEach(item => {
+        paginatedItems.forEach(item => {
             const row = document.createElement('tr');
+            const stockValue = item.quantity * item.price;
             
-            // Determine status class
+            // Determine status
             let statusClass = '';
             let statusText = '';
-            if (item.status === 'in-stock') {
-                statusClass = 'in-stock';
-                statusText = 'In Stock';
-            } else if (item.status === 'low-stock') {
-                statusClass = 'low-stock';
+            
+            if (item.quantity <= 0) {
+                statusClass = 'status-out-of-stock';
+                statusText = 'Out of Stock';
+            } else if (item.quantity <= item.threshold) {
+                statusClass = 'status-low-stock';
                 statusText = 'Low Stock';
             } else {
-                statusClass = 'out-of-stock';
-                statusText = 'Out of Stock';
+                statusClass = 'status-in-stock';
+                statusText = 'In Stock';
             }
             
             row.innerHTML = `
-                <td>${item.productId}</td>
-                <td>${item.name}</td>
+                <td>${item.productName}</td>
+                <td>${item.sku}</td>
                 <td>${capitalizeFirstLetter(item.category)}</td>
                 <td>${item.size}</td>
                 <td>${item.color}</td>
-                <td>${item.stock}</td>
-                <td>${item.lowStockAlert}</td>
-                <td><span class="status ${statusClass}">${statusText}</span></td>
-                <td>${formatDate(item.lastUpdated)}</td>
+                <td>${item.quantity}</td>
+                <td>$${item.price.toFixed(2)}</td>
+                <td>$${stockValue.toFixed(2)}</td>
+                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                 <td>
-                    <button class="btn small secondary edit-inventory" data-id="${item.id}"><i class="fas fa-edit"></i></button>
-                    <button class="btn small danger delete-inventory" data-id="${item.id}"><i class="fas fa-trash"></i></button>
+                    <div class="action-buttons">
+                        <button class="btn-table btn-edit" data-id="${item.id}">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn-table btn-delete" data-id="${item.id}">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
                 </td>
             `;
             
             inventoryList.appendChild(row);
         });
         
-        // Update pagination info
-        const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-        pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+        // Update pagination controls
+        updatePaginationControls();
         
-        // Disable/enable pagination buttons
+        // Add event listeners to action buttons
+        document.querySelectorAll('.btn-edit').forEach(btn => {
+            btn.addEventListener('click', () => openEditInventoryModal(btn.dataset.id));
+        });
+        
+        document.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.addEventListener('click', () => openDeleteConfirmation(btn.dataset.id));
+        });
+    }
+
+    // Apply filters and sorting
+    function applyFilters() {
+        const searchTerm = inventorySearch.value.toLowerCase();
+        const category = categoryFilter.value;
+        const status = statusFilter.value;
+        const sortOption = sortSelect.value;
+        
+        // Filter by search term
+        filteredInventory = inventoryData.filter(item => 
+            item.productName.toLowerCase().includes(searchTerm) || 
+            item.sku.toLowerCase().includes(searchTerm) ||
+            item.color.toLowerCase().includes(searchTerm)
+        );
+        
+        // Filter by category
+        if (category !== 'all') {
+            filteredInventory = filteredInventory.filter(item => item.category === category);
+        }
+        
+        // Filter by status
+        if (status !== 'all') {
+            filteredInventory = filteredInventory.filter(item => {
+                if (status === 'in-stock') return item.quantity > item.threshold;
+                if (status === 'low-stock') return item.quantity > 0 && item.quantity <= item.threshold;
+                if (status === 'out-of-stock') return item.quantity <= 0;
+                return true;
+            });
+        }
+        
+        // Apply sorting
+        switch (sortOption) {
+            case 'name-asc':
+                filteredInventory.sort((a, b) => a.productName.localeCompare(b.productName));
+                break;
+            case 'name-desc':
+                filteredInventory.sort((a, b) => b.productName.localeCompare(a.productName));
+                break;
+            case 'stock-asc':
+                filteredInventory.sort((a, b) => a.quantity - b.quantity);
+                break;
+            case 'stock-desc':
+                filteredInventory.sort((a, b) => b.quantity - a.quantity);
+                break;
+            case 'value-asc':
+                filteredInventory.sort((a, b) => (a.quantity * a.price) - (b.quantity * b.price));
+                break;
+            case 'value-desc':
+                filteredInventory.sort((a, b) => (b.quantity * b.price) - (a.quantity * a.price));
+                break;
+        }
+        
+        // Reset to first page when filters change
+        currentPage = 1;
+        renderInventoryTable();
+    }
+
+    // Update pagination controls
+    function updatePaginationControls() {
+        const totalPages = Math.ceil(filteredInventory.length / itemsPerPage);
+        
+        pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
         prevPageBtn.disabled = currentPage === 1;
         nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
     }
 
-    // Render stock movements
-    function renderStockMovements() {
-        stockMovements.innerHTML = '';
-        
-        stockMovementData.forEach(movement => {
-            const row = document.createElement('tr');
-            
-            // Determine quantity class
-            const quantityClass = movement.quantity > 0 ? 'text-success' : 'text-danger';
-            const quantitySymbol = movement.quantity > 0 ? '+' : '';
-            
-            row.innerHTML = `
-                <td>${formatDate(movement.date)}</td>
-                <td>${movement.product}</td>
-                <td>${movement.type}</td>
-                <td class="${quantityClass}">${quantitySymbol}${movement.quantity}</td>
-                <td>${movement.user}</td>
-            `;
-            
-            stockMovements.appendChild(row);
-        });
+    // Pagination functions
+    function goToPrevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            renderInventoryTable();
+        }
     }
 
-    // Render inventory alerts
-    function renderInventoryAlerts() {
-        inventoryAlerts.innerHTML = '';
-        
-        alertData.forEach(alert => {
-            const alertItem = document.createElement('div');
-            alertItem.className = `alert-item ${alert.type}`;
-            
-            alertItem.innerHTML = `
-                <i class="fas ${alert.type === 'warning' ? 'fa-exclamation-triangle' : 'fa-exclamation-circle'}"></i>
-                <div>
-                    <p>${alert.message}</p>
-                    <small class="text-muted">${alert.date}</small>
-                </div>
-            `;
-            
-            inventoryAlerts.appendChild(alertItem);
-        });
+    function goToNextPage() {
+        const totalPages = Math.ceil(filteredInventory.length / itemsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderInventoryTable();
+        }
     }
 
-    // Setup event listeners
-    function setupEventListeners() {
-        // Modal controls
-        addInventoryBtn.addEventListener('click', () => {
-            document.getElementById('inventory-modal-title').textContent = 'Add Stock to Inventory';
-            inventoryForm.reset();
-            inventoryModal.style.display = 'flex';
-        });
-        
-        closeModalBtn.addEventListener('click', () => {
-            inventoryModal.style.display = 'none';
-        });
-        
-        cancelBtn.addEventListener('click', () => {
-            inventoryModal.style.display = 'none';
-        });
-        
-        // Close modal when clicking outside
-        window.addEventListener('click', (e) => {
-            if (e.target === inventoryModal) {
-                inventoryModal.style.display = 'none';
-            }
-        });
-        
-        // Calculate total cost
-        inventoryQuantity.addEventListener('input', calculateTotal);
-        inventoryCost.addEventListener('input', calculateTotal);
-        
-        // Form submission
-        inventoryForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            saveInventoryItem();
-        });
-        
-        // Filter controls
-        // categoryFilter.addEventListener('change', filterInventory);
-        // statusFilter.addEventListener('change', filterInventory);
-        // searchInventory.addEventListener('input', filterInventory);
+    // Modal functions
+    function openAddInventoryModal() {
+        document.getElementById('inventory-modal-title').textContent = 'Add Inventory Item';
+        inventoryForm.reset();
+        inventoryForm.dataset.mode = 'add';
+        inventoryModal.style.display = 'block';
     }
+
+    function openEditInventoryModal(id) {
+        const item = inventoryData.find(item => item.id == id);
+        if (!item) return;
+        
+        document.getElementById('inventory-modal-title').textContent = 'Edit Inventory Item';
+        inventoryForm.dataset.mode = 'edit';
+        inventoryForm.dataset.id = id;
+        
+        // Populate form fields
+        document.getElementById('inventory-product').value = item.productId;
+        document.getElementById('inventory-sku').value = item.sku;
+        document.getElementById('inventory-size').value = item.size;
+        document.getElementById('inventory-color').value = item.color;
+        document.getElementById('inventory-quantity').value = item.quantity;
+        document.getElementById('inventory-threshold').value = item.threshold;
+        document.getElementById('inventory-location').value = item.location || '';
+        document.getElementById('inventory-notes').value = item.notes || '';
+        
+        inventoryModal.style.display = 'block';
+    }
+
+    function closeModal() {
+        inventoryModal.style.display = 'none';
+    }
+
+    // Confirmation modal functions
+    let itemToDelete = null;
+
+    function openDeleteConfirmation(id) {
+        itemToDelete = id;
+        document.getElementById('confirm-message').textContent = 
+            'Are you sure you want to delete this inventory item? This action cannot be undone.';
+        confirmModal.style.display = 'block';
+    }
+
+    function closeConfirmModal() {
+        confirmModal.style.display = 'none';
+        itemToDelete = null;
+    }
+
+    function executeConfirmedAction() {
+        if (itemToDelete) {
+            deleteInventoryItem(itemToDelete);
+        }
+        closeConfirmModal();
+    }
+
+    // Inventory CRUD operations
+    function handleInventorySubmit(e) {
+        e.preventDefault();
+        
+        const formData = {
+            productId: document.getElementById('inventory-product').value,
+            sku: document.getElementById('inventory-sku').value,
+            size: document.getElementById('inventory-size').value,
+            color: document.getElementById('inventory-color').value,
+            quantity: parseInt(document.getElementById('inventory-quantity').value),
+            threshold: parseInt(document.getElementById('inventory-threshold').value),
+            location: document.getElementById('inventory-location').value,
+            notes: document.getElementById('inventory-notes').value
+        };
+        
+        if (inventoryForm.dataset.mode === 'add') {
+            addInventoryItem(formData);
+        } else {
+            updateInventoryItem(inventoryForm.dataset.id, formData);
+        }
+    }
+
+    function addInventoryItem(data) {
+        // In a real app, this would be an API call
+        const newId = inventoryData.length > 0 ? Math.max(...inventoryData.map(item => item.id)) + 1 : 1;
+        
+        // Get product details (in a real app, this would come from a products API)
+        const product = {
+            id: data.productId,
+            name: "Sample Product", // This would come from your products data
+            category: "running", // This would come from your products data
+            price: 99.99 // This would come from your products data
+        };
+        
+        const newItem = {
+            id: newId,
+            productId: data.productId,
+            productName: product.name,
+            sku: data.sku,
+            category: product.category,
+            size: data.size,
+            color: data.color,
+            quantity: data.quantity,
+            threshold: data.threshold,
+            price: product.price,
+            location: data.location,
+            notes: data.notes,
+            lastUpdated: new Date().toISOString().split('T')[0]
+        };
+        
+        inventoryData.unshift(newItem);
+        closeModal();
+        renderInventoryTable();
+        
+        // Show success notification
+        showNotification('Inventory item added successfully!', 'success');
+    }
+
+    function updateInventoryItem(id, data) {
+        const index = inventoryData.findIndex(item => item.id == id);
+        if (index === -1) return;
+        
+        // In a real app, this would be an API call
+        inventoryData[index] = {
+            ...inventoryData[index],
+            sku: data.sku,
+            size: data.size,
+            color: data.color,
+            quantity: data.quantity,
+            threshold: data.threshold,
+            location: data.location,
+            notes: data.notes,
+            lastUpdated: new Date().toISOString().split('T')[0]
+        };
+        
+        closeModal();
+        renderInventoryTable();
+        
+        // Show success notification
+        showNotification('Inventory item updated successfully!', 'success');
+    }
+
+    function deleteInventoryItem(id) {
+        // In a real app, this would be an API call
+        inventoryData = inventoryData.filter(item => item.id != id);
+        renderInventoryTable();
+        
+        // Show success notification
+        showNotification('Inventory item deleted successfully!', 'success');
+    }
+
+    // Helper functions
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    function showNotification(message, type) {
+        // In a real app, you might use a more sophisticated notification system
+        alert(`${type.toUpperCase()}: ${message}`);
+    }
+
+    // Initialize the page
+    init();
 });
-
-   
