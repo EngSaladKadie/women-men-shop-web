@@ -74,7 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
             price: 139.99,
             location: "E1-F3",
             status: "in-stock",
-            lastUpdated: "2023-05-12"
+            lastUpdated: "2023-05-12",
+            mage:"./asset/m10.avif"
         }
     ];
 
@@ -190,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${item.size}</td>
                 <td>${item.color}</td>
                 <td>${item.quantity}</td>
+                 <td>${item.image}</td>
                 <td>$${item.price.toFixed(2)}</td>
                 <td>$${stockValue.toFixed(2)}</td>
                 <td><span class="status-badge ${statusClass}">${statusText}</span></td>
